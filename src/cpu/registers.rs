@@ -1,3 +1,5 @@
+
+#[derive(Debug)]
 pub struct Registers {
     // 8-bit registers
     pub a: u8,

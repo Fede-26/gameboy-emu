@@ -44,6 +44,17 @@ fn main() {
     let mut cpu = Cpu::new();
 
     cpu.memory.load_rom(&rom_vec);
+
+
+
+    // Run the CPU
+    for _ in 0..10 {
+        println!("PC: {:#x}", cpu.registers.pc);
+        cpu.step();
+
+        // Print the registers
+        // println!("Registers: {:#?}", cpu.registers);
+    }
 }
 
 
