@@ -6,6 +6,10 @@ use rom_reader::{CartridgeType, RomHeader};
 
 mod cpu;
 use cpu::Cpu;
+
+mod gpu;
+use gpu::Gpu;
+
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -45,15 +49,30 @@ fn main() {
 
     cpu.memory.load_rom(&rom_vec);
 
-
+    let mut gpu = Gpu::new();
 
     // Run the CPU
-    for _ in 0..10 {
-        println!("PC: {:#x}", cpu.registers.pc);
+    let mut counter: u64 = 0;
+    loop {
+        // println!("Counter: {} | PC: {:#x}", counter, cpu.registers.pc);
         cpu.step();
-
+        if counter%1000 == 0 {
+            println!("Counter: {} | PC: {:#x}", counter, cpu.registers.pc);
+        }
         // Print the registers
         // println!("Registers: {:#?}", cpu.registers);
+
+        // Renders the screen
+        gpu.render(&cpu.memory);
+
+        // Sleep for a bit to slow down the execution
+        // std::thread::sleep(std::time::Duration::from_micros(1));
+        counter = counter.wrapping_add(1 as u64);
+
+        // if counter > 5 {
+        //     //wait
+        //     loop {}
+        // }
     }
 }
 

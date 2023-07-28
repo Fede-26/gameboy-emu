@@ -1,7 +1,7 @@
 mod registers;
 use registers::Registers;
 
-mod memory;
+pub mod memory;
 use memory::Memory;
 
 mod instructions;
@@ -123,7 +123,7 @@ impl Cpu {
         let (new_pc, cycles) = if let Some(instruction) = Instruction::from_byte(op_byte, prefixed)
         {
             let description = format!("0x{}{:x} -> {:?}", if prefixed { "cb" } else { "" }, op_byte, instruction);
-            println!("Stepped: {}", description);
+            // println!("Stepped: {}", description);
             self.execute(instruction)
         } else {
             let description = format!("0x{}{:x}", if prefixed { "cb" } else { "" }, op_byte);

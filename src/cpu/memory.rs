@@ -13,13 +13,13 @@ pub struct Memory {
     // 0xFF80 - 0xFFFE: High RAM (HRAM)
     // 0xFFFF: Interrupt Enable Register
 
-    memory: [u8; 0xFFFF],
+    pub memory: [u8; 0xFFFF+1],
 }
 
 impl Memory {
     pub fn new() -> Memory {
         Memory {
-            memory: [0; 0xFFFF],
+            memory: [0; 0xFFFF+1],
         }
     }
 
@@ -43,5 +43,9 @@ impl Memory {
         // Copy the rom vector into the rom_bank_0 and rom_bank_1 arrays like a single contiguous array
         // self.rom_bank_0.copy_from_slice(&rom[0..0x4000]);
         // self.rom_bank_1.copy_from_slice(&rom[0x4000..0x8000]);
+    }
+
+    pub fn tileset(&self) -> &[u8] {
+        &self.memory[0x8000..0x9800]
     }
 }
